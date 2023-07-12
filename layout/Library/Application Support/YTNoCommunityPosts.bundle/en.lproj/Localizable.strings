@@ -1,0 +1,4 @@
+// YTNoCommunityPosts Localization
+
+"SHOW_COMMUNITY_POSTS" = "Show Community Posts";
+"SHOW_COMMUNITY_POSTS_DESC" = "Enables viewing community posts in the app.";
