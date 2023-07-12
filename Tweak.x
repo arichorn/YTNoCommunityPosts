@@ -1,5 +1,7 @@
 #import <UIKit/UIKit.h>
 
+#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
+
 @interface YTCollectionViewCell : UICollectionViewCell
 @end
 
@@ -29,8 +31,8 @@
 %hook YTSettingsViewController
 - (void)setSectionItems:(NSMutableArray <YTSettingsSectionItem *> *)sectionItems forCategory:(NSInteger)category title:(NSString *)title titleDescription:(NSString *)titleDescription headerHidden:(BOOL)headerHidden {
 	if (category == 1) {
-		YTSettingsSectionItem *commpost = [[%c(YTSettingsSectionItem) alloc] initWithTitle:@"Show Community Posts"
-		titleDescription:@"Enables viewing community posts in app"];
+		YTSettingsSectionItem *commpost = [[%c(YTSettingsSectionItem) alloc] initWithTitle:LOC(@"SHOW_COMMUNITY_POSTS")
+		titleDescription:LOC(@"SHOW_COMMUNITY_POSTS_DESC")];
 		commpost.hasSwitch = YES;
 		commpost.switchVisible = YES;
 		commpost.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"show_comm_posts"];
