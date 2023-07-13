@@ -40,6 +40,7 @@ NSBundle *YTNoCommunityPostsBundle() {
     });
     return bundle;
 }
+NSBundle *tweakBundle = YTNoCommunityPostsBundle();
 
 %hook YTSettingsViewController
 - (void)setSectionItems:(NSMutableArray <YTSettingsSectionItem *> *)sectionItems forCategory:(NSInteger)category title:(NSString *)title titleDescription:(NSString *)titleDescription headerHidden:(BOOL)headerHidden {
