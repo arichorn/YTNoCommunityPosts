@@ -1,7 +1,8 @@
 #import <UIKit/UIKit.h>
 #import <rootless.h>
 
-#define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
+#define _LOC(b, x) [b localizedStringForKey:x value:nil table:nil]
+#define LOC(x) _LOC(tweakBundle, x)
 
 @interface YTCollectionViewCell : UICollectionViewCell
 @end
@@ -40,7 +41,6 @@ NSBundle *YTNoCommunityPostsBundle() {
     });
     return bundle;
 }
-NSBundle *tweakBundle = YTNoCommunityPostsBundle();
 
 %hook YTSettingsViewController
 - (void)setSectionItems:(NSMutableArray <YTSettingsSectionItem *> *)sectionItems forCategory:(NSInteger)category title:(NSString *)title titleDescription:(NSString *)titleDescription headerHidden:(BOOL)headerHidden {
@@ -75,3 +75,10 @@ NSBundle *tweakBundle = YTNoCommunityPostsBundle();
 	return %orig;
 }
 %end
+
+%ctor {
+    NSBundle *bundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/Frameworks/Module_Framework.framework", [[NSBundle mainBundle] bundlePath]]];
+    if (!bundle.loaded) [bundle load];
+    cache = [NSMutableDictionary new];
+    %init;
+}
