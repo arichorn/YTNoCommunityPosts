@@ -1,0 +1,4 @@
+// YTNoCommunityPosts Localization
+
+"SHOW_COMMUNITY_POSTS" = "コミュニティ投稿を表示";
+"SHOW_COMMUNITY_POSTS_DESC" = "アプリ内でコミュニティ投稿の表示を有効にします";
