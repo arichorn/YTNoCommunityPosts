@@ -74,3 +74,13 @@ NSBundle *YTNoCommunityPostsBundle() {
     return %orig;
 }
 %end
+
+%hook YTIElementRendererCompatibilityOptions
+- (BOOL)hasUseBackstageCellControllerOnIos {
+    BOOL hideCommunityPosts = [[NSUserDefaults standardUserDefaults] boolForKey:@"hide_comm_posts"];
+    if (hideCommunityPosts) {
+        return NO;
+    }
+    return %orig;
+}
+%end
