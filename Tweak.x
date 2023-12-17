@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <rootless.h>
+#import "../YouTubeHeader/YTIElementRenderer.h"
 
 #define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
 
@@ -15,11 +16,6 @@ NSBundle *tweakBundle;
 @property (nonatomic, copy) BOOL (^switchBlock)(YTSettingsCell *, BOOL);
 @property (nonatomic) int settingItemId;
 - (instancetype)initWithTitle:(NSString *)title titleDescription:(NSString *)titleDescription;
-@end
-
-@interface YTIElementRenderer : GPBMessage
-@property (nonatomic, strong, readwrite) YTIElementRendererCompatibilityOptions *compatibilityOptions;
-@property (nonatomic, assign, readwrite) BOOL hasCompatibilityOptions;
 @end
 
 @interface _ASCollectionViewCell : UICollectionViewCell
