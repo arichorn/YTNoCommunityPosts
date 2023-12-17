@@ -17,6 +17,16 @@ NSBundle *tweakBundle;
 - (instancetype)initWithTitle:(NSString *)title titleDescription:(NSString *)titleDescription;
 @end
 
+@interface YTIElementRenderer : GPBMessage
+@property (nonatomic, strong, readwrite) YTIElementRendererCompatibilityOptions *compatibilityOptions;
+@property (nonatomic, assign, readwrite) BOOL hasCompatibilityOptions;
+@end
+
+@interface YTIElementRendererCompatibilityOptions : GPBMessage
+@property (nonatomic, assign, readwrite) BOOL hasAdLoggingData;
+@property (nonatomic, assign, readwrite) BOOL hasUseBackstageCellControllerOnIos;
+@end
+
 @interface _ASCollectionViewCell : UICollectionViewCell
 - (id)node;
 @end
@@ -69,6 +79,16 @@ NSBundle *YTNoCommunityPostsBundle() {
     BOOL hideCommunityPosts = [[NSUserDefaults standardUserDefaults] boolForKey:@"hide_comm_posts"];
     if (hideCommunityPosts && [[self description] containsString:@"post_base_wrapper.eml"]) {
         return nil;
+    }
+    return %orig;
+}
+%end
+
+%hook YTIElementRendererCompatibilityOptions
+- (BOOL)hasUseBackstageCellControllerOnIos {
+    BOOL hideCommunityPosts = [[NSUserDefaults standardUserDefaults] boolForKey:@"hide_comm_posts"];
+    if (hideCommunityPosts) {
+        return NO;
     }
     return %orig;
 }
