@@ -1,7 +1,6 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <rootless.h>
-#import "../YouTubeHeader/YTIElementRenderer.h"
 
 #define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
 
@@ -21,11 +20,6 @@ NSBundle *tweakBundle;
 @interface YTIElementRenderer : GPBMessage
 @property (nonatomic, strong, readwrite) YTIElementRendererCompatibilityOptions *compatibilityOptions;
 @property (nonatomic, assign, readwrite) BOOL hasCompatibilityOptions;
-@end
-
-@interface YTIElementRendererCompatibilityOptions : GPBMessage
-@property (nonatomic, assign, readwrite) BOOL hasAdLoggingData;
-@property (nonatomic, assign, readwrite) BOOL hasUseBackstageCellControllerOnIos;
 @end
 
 @interface _ASCollectionViewCell : UICollectionViewCell
@@ -80,16 +74,6 @@ NSBundle *YTNoCommunityPostsBundle() {
     BOOL hideCommunityPosts = [[NSUserDefaults standardUserDefaults] boolForKey:@"hide_comm_posts"];
     if (hideCommunityPosts && [[self description] containsString:@"post_base_wrapper.eml"]) {
         return nil;
-    }
-    return %orig;
-}
-%end
-
-%hook YTIElementRendererCompatibilityOptions
-- (BOOL)hasUseBackstageCellControllerOnIos {
-    BOOL hideCommunityPosts = [[NSUserDefaults standardUserDefaults] boolForKey:@"hide_comm_posts"];
-    if (hideCommunityPosts) {
-        return NO;
     }
     return %orig;
 }
