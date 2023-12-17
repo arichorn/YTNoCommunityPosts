@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <rootless.h>
+#import "../YouTubeHeader/YTIElementRenderer.h"
 
 #define LOC(x) [tweakBundle localizedStringForKey:x value:nil table:nil]
 
