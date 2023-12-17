@@ -64,22 +64,12 @@ NSBundle *YTNoCommunityPostsBundle() {
 }
 %end
 
-%hook YTAsyncCollectionView
-- (id)cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"hide_comm_posts"]) {
-        return %orig;
-    }  
-    UICollectionViewCell *cell = %orig;
-    
-    if ([cell isKindOfClass:NSClassFromString(@"_ASCollectionViewCell")]) {
-        _ASCollectionViewCell *asCell = (_ASCollectionViewCell *)cell;
-        
-        NSString *result = [[[[asCell node] accessibilityElements] valueForKey:@"description"] componentsJoinedByString:@""];
-        
-        if ([result rangeOfString:@"id.ui.backstage.post"].location != NSNotFound || [result rangeOfString:@"id.ui.backstage.original_post"].location != NSNotFound) {
-            [self deleteItemsAtIndexPaths:@[indexPath]];
-        }
+%hook YTIElementRenderer
+- (NSData *)elementData {
+    BOOL hideCommunityPosts = [[NSUserDefaults standardUserDefaults] boolForKey:@"hide_comm_posts"];
+    if (hideCommunityPosts && [[self description] containsString:@"post_base_wrapper.eml"]) {
+        return nil;
     }
-    return cell;
+    return %orig;
 }
 %end
